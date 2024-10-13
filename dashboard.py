@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from io import StringIO
+
 
 
 st.set_page_config(page_title = 'EDA', page_icon= "bar_chart", layout='wide')
@@ -17,13 +17,10 @@ def clean_data(df):
 
 fl = st.file_uploader(':file_folder: Upload a file', type="csv")
 if fl is not None:
-    try:
-        file_contents = fl.getvalue().decode('utf-8')
-        s = StringIO(file_contents)
-        df = pd.read_csv(s, encoding='ISO-8859-1')
+    filename = fl.name
+    st.write(filename,"in use")
+    df = pd.read_csv(fl, encoding= 'ISO-8859-1')
 
-    except Exception as e:
-        st.error(f"Error processing the file: {str(e)}")
 
     if not df.empty:
         st.header("Sample")
